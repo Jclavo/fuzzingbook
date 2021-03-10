@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  fuzzingbook:
+    image: fuzzingbook
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 5678:5678
+    volumes:
+      - ./code:/app/code
