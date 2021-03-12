@@ -3,7 +3,6 @@ import random
 import os
 import tempfile
 
-import os
 import subprocess
 
 # # Fuzzer class

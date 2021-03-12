@@ -1,0 +1,65 @@
+        -:    0:Source:cgi_decode.c
+        -:    0:Graph:cgi_decode.gcno
+        -:    0:Data:cgi_decode.gcda
+        -:    0:Runs:1
+        -:    1:
+        -:    2:/* CGI decoding as C program */
+        -:    3:
+        -:    4:#include <stdlib.h>
+        -:    5:#include <string.h>
+        -:    6:#include <stdio.h>
+        -:    7:
+        -:    8:int hex_values[256];
+        -:    9:
+        1:   10:void init_hex_values() {
+      257:   11:    for (int i = 0; i < sizeof(hex_values) / sizeof(int); i++) {
+      256:   12:        hex_values[i] = -1;
+        -:   13:    }
+        1:   14:    hex_values['0'] = 0; hex_values['1'] = 1; hex_values['2'] = 2; hex_values['3'] = 3;
+        1:   15:    hex_values['4'] = 4; hex_values['5'] = 5; hex_values['6'] = 6; hex_values['7'] = 7;
+        1:   16:    hex_values['8'] = 8; hex_values['9'] = 9;
+        -:   17:
+        1:   18:    hex_values['a'] = 10; hex_values['b'] = 11; hex_values['c'] = 12; hex_values['d'] = 13;
+        1:   19:    hex_values['e'] = 14; hex_values['f'] = 15;
+        -:   20:
+        1:   21:    hex_values['A'] = 10; hex_values['B'] = 11; hex_values['C'] = 12; hex_values['D'] = 13;
+        1:   22:    hex_values['E'] = 14; hex_values['F'] = 15;
+        1:   23:}
+        -:   24:
+        1:   25:int cgi_decode(char *s, char *t) {
+       32:   26:    while (*s != '\0') {
+       31:   27:        if (*s == '+')
+        3:   28:            *t++ = ' ';
+       28:   29:        else if (*s == '%') {
+        1:   30:            int digit_high = *++s;
+        1:   31:            int digit_low = *++s;
+        1:   32:            if (hex_values[digit_high] >= 0 && hex_values[digit_low] >= 0) {
+        1:   33:                *t++ = hex_values[digit_high] * 16 + hex_values[digit_low];
+        -:   34:            }
+        -:   35:            else
+    #####:   36:                return -1;
+        -:   37:        }
+        -:   38:        else
+       27:   39:            *t++ = *s;
+       31:   40:        s++;
+        -:   41:    }
+        1:   42:    *t = '\0';
+        1:   43:    return 0;
+        -:   44:}
+        -:   45:
+        1:   46:int main(int argc, char *argv[]) {
+        1:   47:    init_hex_values();
+        -:   48:
+        1:   49:    if (argc >= 2) {
+        1:   50:        char *s = argv[1];
+        1:   51:        char *t = malloc(strlen(s) + 1); /* output is at most as long as input */
+        1:   52:        int ret = cgi_decode(s, t);
+        1:   53:        printf("%s\n", t);
+        1:   54:        return ret;
+        -:   55:    }
+        -:   56:    else
+        -:   57:    {
+    #####:   58:        printf("cgi_decode: usage: cgi_decode STRING\n");
+    #####:   59:        return 1;
+        -:   60:    }
+        -:   61:}
