@@ -3,7 +3,7 @@
 # import matplotlib.pyplot as plt
 from fuzzingbook.Coverage import *
 
-from .coverage import Coverage
+from core.coverage import Coverage
 from .cgiDecode import cgi_decode
 
 from core.randomFuzzer import RandomFuzzer
@@ -82,8 +82,8 @@ def hundred_inputs():
 
 all_coverage, cumulative_coverage = population_coverage(hundred_inputs(), cgi_decode)
 
-# print(all_coverage)
-# print(cumulative_coverage)
+print(all_coverage)
+print(cumulative_coverage)
 
 # # Plot the coverage
 
