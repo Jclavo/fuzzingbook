@@ -32,4 +32,7 @@ http_runner = FunctionCoverageRunner(http_program)
 
 mutation_fuzzer.runs(http_runner, trials=10000)
 # # valid input that were generated
-print(mutation_fuzzer.population)
+# print(mutation_fuzzer.population)
+print(len(mutation_fuzzer.population))
+for result in mutation_fuzzer.population:
+    print(result)
