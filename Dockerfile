@@ -11,10 +11,17 @@ ENV PYTHONUNBUFFERED=1
 COPY requirements.txt .
 RUN python -m pip install -r requirements.txt
 
+# Install numpy
+RUN apk add g++ 
+RUN pip install numpy
+
 WORKDIR /app
 COPY . /app
 
 RUN apk add build-base
+
+
+
 # Switching to a non-root user, please refer to https://aka.ms/vscode-docker-python-user-rights
 # RUN useradd appuser && chown -R appuser /app
 # USER appuser
