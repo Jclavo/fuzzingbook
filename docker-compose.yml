@@ -1,8 +1,9 @@
 version: '3.4'
 
 services:
-  fuzzingbook:
-    image: fuzzingbook
+  python-fuzzing-book:
+    image: python-fuzzing-book
+    container_name: fuzzing-book
     build:
       context: .
       dockerfile: ./Dockerfile
