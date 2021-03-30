@@ -7,9 +7,9 @@ from core.coverage import Coverage
 from .cgiDecode import cgi_decode
 
 from core.randomFuzzer import RandomFuzzer
+from core.population_coverage import population_coverage
 
 # # Coverage class
-
 with Coverage() as cov:
     cgi_decode("a+b")
 
@@ -58,21 +58,6 @@ with Coverage() as cov_fuzz:
 trials = 100
 
 random_fuzzer = RandomFuzzer()
-
-def population_coverage(population, function):
-    cumulative_coverage = []
-    all_coverage = set()
-
-    for s in population:
-        with Coverage() as cov:
-            try:
-                function(s)
-            except:
-                pass
-        all_coverage |= cov.coverage()
-        cumulative_coverage.append(len(all_coverage))
-
-    return all_coverage, cumulative_coverage
 
 def hundred_inputs():
     population = []
