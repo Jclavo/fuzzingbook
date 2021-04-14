@@ -9,7 +9,7 @@ from core.mutationFuzzerPlus import MutationFuzzerPlus
 from core.population_coverage import population_coverage
 from core.greyboxFuzzer import GreyboxFuzzer
 from core.randomFuzzer import RandomFuzzer
-
+from core.mutationCoverageFuzzer import MutationCoverageFuzzer
 from .crashme import crashme
 
 # print(mutate("good"))
@@ -38,29 +38,29 @@ from .crashme import crashme
 
 # # Test Mutation Fuzzer Plus class
 # seed_input = ["good"]
-# # seed_input = ["good","look"]
+# seed_input = ["good","look"]
 # mutation_fuzzer = MutationFuzzerPlus(seed_input, Mutator(), PowerSchedule())
 # print(mutation_fuzzer.fuzz())
 # print(mutation_fuzzer.fuzz())
 # print(mutation_fuzzer.fuzz())
 
-# # run blackbox mutation-based fuzzer
-# import time
-# n = 30000
+# # BLACKBOX MUTATION-BASED FUZZER
+import time
+n = 30000
 
-# seed_input = ["good"]
-# blackbox_fuzzer = MutationFuzzerPlus(seed_input, Mutator(), PowerSchedule())
+seed_input = ["good"]
+blackbox_fuzzer = MutationFuzzerPlus(seed_input, Mutator(), PowerSchedule())
 
-# start = time.time()
-# blackbox_fuzzer.runs(FunctionCoverageRunner(crashme), trials=n)
-# end = time.time()
+start = time.time()
+blackbox_fuzzer.runs(FunctionCoverageRunner(crashme), trials=n)
+end = time.time()
 
-# print("It took the blackbox mutation-based fuzzer %0.2f seconds to generate and execute %d inputs." % (end - start, n))
+print("It took the blackbox mutation-based fuzzer %0.2f seconds to generate and execute %d inputs." % (end - start, n))
 
-# _, blackbox_coverage = population_coverage(blackbox_fuzzer.inputs, crashme)
-# bb_max_coverage = max(blackbox_coverage)
+blackbox_cumulative, blackbox_coverage = population_coverage(blackbox_fuzzer.inputs, crashme)
+bb_max_coverage = max(blackbox_coverage)
 
-# print("The blackbox mutation-based fuzzer achieved a maximum coverage of %d statements." % bb_max_coverage)
+print("The blackbox mutation-based fuzzer achieved a maximum coverage of %d statements." % bb_max_coverage)
 
 # # run greybox mutation-based fuzzer
 # import time
@@ -81,14 +81,13 @@ from .crashme import crashme
 # print("Our greybox mutation-based fuzzer covers %d more statements" % gb_max_coverage)
 # print(greybox_fuzzer.population)
 
-# # blackbox generation-based fuzzer
-import time
-n = 30000
-seed_input = ["good"]
-blackbox_gen_fuzzer = RandomFuzzer(min_length=4, max_length=4, char_start=32, char_range=96)
+# # BLACKBOX GENERATION-BASED FUZZER
+# import time
+# n = 30000
+# blackbox_gen_fuzzer = RandomFuzzer(min_length=4, max_length=4, char_start=32, char_range=96)
 
-start = time.time()
-blackbox_gen_fuzzer.runs(FunctionCoverageRunner(crashme), trials=n)
-end = time.time()
+# start = time.time()
+# blackbox_gen_fuzzer.runs(FunctionCoverageRunner(crashme), trials=n)
+# end = time.time()
 
-print("It took the blackbox generation-based fuzzer %0.2f seconds to generate and execute %d inputs." % (end - start, n))
+# print("It took the blackbox generation-based fuzzer %0.2f seconds to generate and execute %d inputs." % (end - start, n))
