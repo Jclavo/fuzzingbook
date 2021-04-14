@@ -36,3 +36,6 @@ mutation_fuzzer.runs(http_runner, trials=10000)
 print(len(mutation_fuzzer.population))
 for result in mutation_fuzzer.population:
     print(result)
+# print(len(mutation_fuzzer.coverages_seen))
+# for coverage_seen in mutation_fuzzer.coverages_seen:
+#     print(coverage_seen)
